@@ -1,14 +1,10 @@
-
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-
-
-
 const galleryContainer = document.querySelector('.gallery');
-const galleryMakrup = createCalleryCardsMarkup(galleryItems);
+const galleryMarkup = createCalleryCardsMarkup(galleryItems);
 
-galleryContainer.insertAdjacentHTML('beforeend', galleryMakrup )
+galleryContainer.insertAdjacentHTML('beforeend', galleryMarkup )
 
 function createCalleryCardsMarkup(galleryItems) {
   return galleryItems
@@ -32,31 +28,19 @@ function createCalleryCardsMarkup(galleryItems) {
 
 galleryContainer.addEventListener('click', handleGalleryCardsMarkup);
     
-
 function handleGalleryCardsMarkup(event) {
     event.preventDefault()
-
-    if(event.target.dataset.source) {
-        return event.target.dataset.source;
-    }
-
+    if(!event.target.classList.contains("gallery__image")) {
+        return
+    };
     
     const instance = basicLightbox.create(`
-    <div class="modal">
-       <img src="">
-    </div>
-`)
-
-instance.show()
-
-    console.log(event.target)
-
-   
-
-
+       <img src= ${event.target.dataset.source} width="800" height="600">
     
-}
+    `);
+   instance.show();
 
-
-
-console.log(galleryItems);
+window.addEventListener('keydown', (event) => {
+    if( event.code === 'Escape') instance.close();
+});
+};
